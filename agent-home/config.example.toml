@@ -1,0 +1,391 @@
+# ╔══════════════════════════════════════════════════════════════╗
+# ║  Agent-Staff · zeroclaw 配置模板                                ║
+# ║  复制成 config.toml 后,把所有 <...> 占位符换成你自己的值。      ║
+# ║  ⚠️ config.toml 已被 .gitignore,绝不会提交真密钥。            ║
+# ║                                                                ║
+# ║  这是一套【完整公司组织架构】的示例(9 个部门 agent):          ║
+# ║    🏛 CEO 参谋长(公司)                                        ║
+# ║    营收:📱自媒体运营部  🛒电商部  💼业务部                     ║
+# ║    职能:💰财务部  👥人力部  🗂行政部  📊运营部  🛡合规部        ║
+# ║  删掉你不需要的部门、或照葫芦画瓢加更多——每个部门都是同一套      ║
+# ║  五件套:[agents.X] + [[mcp.servers]] + [mcp_bundles.X] +       ║
+# ║          [channels.lark.X] + [peer_groups.X]。                 ║
+# ╚══════════════════════════════════════════════════════════════╝
+
+schema_version = 3
+
+[memory]
+search_mode = "bm25"
+
+[heartbeat]
+enabled = false
+agent = "ceo"
+interval_minutes = 60
+
+[risk_profiles.standard]
+level = "full"
+
+# ── 模型(任选其一)── zeroclaw 支持 Claude / DeepSeek / Minimax / Qwen / GLM / OpenRouter / 本地 Ollama 等。
+# 每个 agent 的 model_provider 指向下面某个 <type>.<alias>。默认 anthropic.main;想换模型只改 agent 那一行。
+#
+# 鉴权两种都行,而且可并存(不同 agent 用不同的,或 fallback 互为备用):
+#   ① 订阅:跑 `zeroclaw auth paste-token`(Claude 订阅)或 `auth login`(OpenAI/Gemini/xAI OAuth);
+#          或把订阅 OAuth token 加密后放进下面的 api_key。
+#   ② 单独 API key(按量付费):把各家 dashboard 的 API key 放进 api_key。
+# ⚠️ 一律加密存(zeroclaw keyring),别把明文密钥写进 config.toml。
+
+# 选项 A:Claude(订阅或 API)
+[providers.models.anthropic.main]
+model = "claude-opus-4-8"
+api_key = "<YOUR_KEY>"
+
+# 选项 B:DeepSeek(OpenAI 兼容)—— 取消注释即用,并把各 agent 的 model_provider 改成 "deepseek.main"
+# [providers.models.deepseek.main]
+# kind = "openai-compatible"
+# uri = "https://api.deepseek.com/v1"
+# model = "deepseek-chat"
+# api_key = "<YOUR_DEEPSEEK_KEY>"
+
+# 选项 C:Minimax / 其他 OpenAI 兼容服务(uri 以各家官方文档为准)
+# [providers.models.minimax.main]
+# kind = "openai-compatible"
+# uri = "<该服务的 OpenAI 兼容端点>"
+# model = "<模型 ID>"
+# api_key = "<YOUR_KEY>"
+
+# ════════════════ Agents(9 个部门)════════════════
+# 每个 agent:一个部门人设 + 一个 codata MCP(--dept 指向它的部门)+ 一个飞书 bot 渠道 + 一个白名单。
+# 想给某部门换模型:改它的 model_provider(如 deepseek.main)。想省钱:职能部门用便宜模型、CEO 用强模型。
+
+# ── 🏛 CEO 参谋长(唯一能跨部门看全局)──
+[agents.ceo]
+enabled = true
+delegate_same_risk_profile = true
+model_provider = "anthropic.main"   # 想用 DeepSeek/Minimax 就改成 deepseek.main / minimax.main
+mcp_bundles = ["ceo"]
+risk_profile = "standard"
+channels = ["lark.ceo", "feishu.ceo"]
+cron_jobs = ["daily_review"]            # 每日经营巡检(见文末 [cron.*])
+[agents.ceo.memory]
+backend = "sqlite"
+[agents.ceo.identity]
+format = "openclaw"
+
+# ── 📱 自媒体运营部(营收)──
+[agents.media]
+enabled = true
+delegate_same_risk_profile = true
+model_provider = "anthropic.main"
+mcp_bundles = ["media"]
+risk_profile = "standard"
+channels = ["lark.media", "feishu.media"]
+[agents.media.memory]
+backend = "sqlite"
+[agents.media.identity]
+format = "openclaw"
+
+# ── 🛒 电商部(营收)──
+[agents.ecom]
+enabled = true
+delegate_same_risk_profile = true
+model_provider = "anthropic.main"
+mcp_bundles = ["ecom"]
+risk_profile = "standard"
+channels = ["lark.ecom", "feishu.ecom"]
+[agents.ecom.memory]
+backend = "sqlite"
+[agents.ecom.identity]
+format = "openclaw"
+
+# ── 💼 业务部(营收)──
+[agents.biz]
+enabled = true
+delegate_same_risk_profile = true
+model_provider = "anthropic.main"
+mcp_bundles = ["biz"]
+risk_profile = "standard"
+channels = ["lark.biz", "feishu.biz"]
+[agents.biz.memory]
+backend = "sqlite"
+[agents.biz.identity]
+format = "openclaw"
+
+# ── 💰 财务部(职能)──
+[agents.finance]
+enabled = true
+delegate_same_risk_profile = true
+model_provider = "anthropic.main"
+mcp_bundles = ["finance"]
+risk_profile = "standard"
+channels = ["lark.finance", "feishu.finance"]
+cron_jobs = ["finance_weekly"]
+[agents.finance.memory]
+backend = "sqlite"
+[agents.finance.identity]
+format = "openclaw"
+
+# ── 👥 人力部(职能)──
+[agents.hr]
+enabled = true
+delegate_same_risk_profile = true
+model_provider = "anthropic.main"
+mcp_bundles = ["hr"]
+risk_profile = "standard"
+channels = ["lark.hr", "feishu.hr"]
+[agents.hr.memory]
+backend = "sqlite"
+[agents.hr.identity]
+format = "openclaw"
+
+# ── 🗂 行政部(职能)──
+[agents.admin]
+enabled = true
+delegate_same_risk_profile = true
+model_provider = "anthropic.main"
+mcp_bundles = ["admin"]
+risk_profile = "standard"
+channels = ["lark.admin", "feishu.admin"]
+cron_jobs = ["contract_expiry"]         # 合同/证照到期提醒
+[agents.admin.memory]
+backend = "sqlite"
+[agents.admin.identity]
+format = "openclaw"
+
+# ── 📊 运营部(职能)──
+[agents.ops]
+enabled = true
+delegate_same_risk_profile = true
+model_provider = "anthropic.main"
+mcp_bundles = ["ops"]
+risk_profile = "standard"
+channels = ["lark.ops", "feishu.ops"]
+[agents.ops.memory]
+backend = "sqlite"
+[agents.ops.identity]
+format = "openclaw"
+
+# ── 🛡 合规部(职能)──
+[agents.compliance]
+enabled = true
+delegate_same_risk_profile = true
+model_provider = "anthropic.main"
+mcp_bundles = ["compliance"]
+risk_profile = "standard"
+channels = ["lark.compliance", "feishu.compliance"]
+[agents.compliance.memory]
+backend = "sqlite"
+[agents.compliance.identity]
+format = "openclaw"
+
+# ════════════════ codata MCP(每部门一个)════════════════
+# ⚠️ 把下面 args 里的路径换成你机器上 Agent-Staff/agent-os/feishu_mcp.py 的绝对路径。
+# command 用 "python3"(靠 PATH 找)即可;不行就写绝对路径(which python3 查)。setup 向导会自动填对。
+# --dept 的值必须和 dept_registry.json 里的部门名完全一致。
+[[mcp.servers]]
+name = "codata_ceo"
+transport = "stdio"
+command = "python3"
+args = ["<ABS_PATH>/Agent-Staff/agent-os/feishu_mcp.py", "--dept", "公司"]
+
+[[mcp.servers]]
+name = "codata_media"
+transport = "stdio"
+command = "python3"
+args = ["<ABS_PATH>/Agent-Staff/agent-os/feishu_mcp.py", "--dept", "自媒体运营部"]
+
+[[mcp.servers]]
+name = "codata_ecom"
+transport = "stdio"
+command = "python3"
+args = ["<ABS_PATH>/Agent-Staff/agent-os/feishu_mcp.py", "--dept", "电商部"]
+
+[[mcp.servers]]
+name = "codata_biz"
+transport = "stdio"
+command = "python3"
+args = ["<ABS_PATH>/Agent-Staff/agent-os/feishu_mcp.py", "--dept", "业务部"]
+
+[[mcp.servers]]
+name = "codata_finance"
+transport = "stdio"
+command = "python3"
+args = ["<ABS_PATH>/Agent-Staff/agent-os/feishu_mcp.py", "--dept", "财务部"]
+
+[[mcp.servers]]
+name = "codata_hr"
+transport = "stdio"
+command = "python3"
+args = ["<ABS_PATH>/Agent-Staff/agent-os/feishu_mcp.py", "--dept", "人力部"]
+
+[[mcp.servers]]
+name = "codata_admin"
+transport = "stdio"
+command = "python3"
+args = ["<ABS_PATH>/Agent-Staff/agent-os/feishu_mcp.py", "--dept", "行政部"]
+
+[[mcp.servers]]
+name = "codata_ops"
+transport = "stdio"
+command = "python3"
+args = ["<ABS_PATH>/Agent-Staff/agent-os/feishu_mcp.py", "--dept", "运营部"]
+
+[[mcp.servers]]
+name = "codata_compliance"
+transport = "stdio"
+command = "python3"
+args = ["<ABS_PATH>/Agent-Staff/agent-os/feishu_mcp.py", "--dept", "合规部"]
+
+[mcp_bundles.ceo]
+servers = ["codata_ceo"]
+[mcp_bundles.media]
+servers = ["codata_media"]
+[mcp_bundles.ecom]
+servers = ["codata_ecom"]
+[mcp_bundles.biz]
+servers = ["codata_biz"]
+[mcp_bundles.finance]
+servers = ["codata_finance"]
+[mcp_bundles.hr]
+servers = ["codata_hr"]
+[mcp_bundles.admin]
+servers = ["codata_admin"]
+[mcp_bundles.ops]
+servers = ["codata_ops"]
+[mcp_bundles.compliance]
+servers = ["codata_compliance"]
+
+# ════════════════ 飞书渠道(每部门一个自建应用 bot)════════════════
+# app_id / app_secret 从飞书开放平台你的自建应用里拿。海外 Lark 同理。
+# ⚠️ external_peers:群里 @ 要填【群 chat_id(oc_)】不是 open_id!跑 scripts/list_chats.py 拿。
+#    私聊才用 open_id(ou_)。作用 = 锁定谁能跟这个部门 agent 说话(私聊 + 群都管)。
+[channels.lark.ceo]
+app_id = "<CEO_BOT_APP_ID>"
+app_secret = "<CEO_BOT_APP_SECRET>"
+use_feishu = true
+receive_mode = "websocket"
+enabled = true
+[peer_groups.ceo]
+channel = "lark.ceo"
+agents = ["ceo"]
+external_peers = ["<CEO群_chat_id_oc...>"]
+
+[channels.lark.media]
+app_id = "<MEDIA_BOT_APP_ID>"
+app_secret = "<MEDIA_BOT_APP_SECRET>"
+use_feishu = true
+receive_mode = "websocket"
+enabled = true
+[peer_groups.media]
+channel = "lark.media"
+agents = ["media"]
+external_peers = ["<自媒体群_chat_id_oc...>"]
+
+[channels.lark.ecom]
+app_id = "<ECOM_BOT_APP_ID>"
+app_secret = "<ECOM_BOT_APP_SECRET>"
+use_feishu = true
+receive_mode = "websocket"
+enabled = true
+[peer_groups.ecom]
+channel = "lark.ecom"
+agents = ["ecom"]
+external_peers = ["<电商群_chat_id_oc...>"]
+
+[channels.lark.biz]
+app_id = "<BIZ_BOT_APP_ID>"
+app_secret = "<BIZ_BOT_APP_SECRET>"
+use_feishu = true
+receive_mode = "websocket"
+enabled = true
+[peer_groups.biz]
+channel = "lark.biz"
+agents = ["biz"]
+external_peers = ["<业务群_chat_id_oc...>"]
+
+[channels.lark.finance]
+app_id = "<FINANCE_BOT_APP_ID>"
+app_secret = "<FINANCE_BOT_APP_SECRET>"
+use_feishu = true
+receive_mode = "websocket"
+enabled = true
+[peer_groups.finance]
+channel = "lark.finance"
+agents = ["finance"]
+external_peers = ["<财务群_chat_id_oc...>"]
+
+[channels.lark.hr]
+app_id = "<HR_BOT_APP_ID>"
+app_secret = "<HR_BOT_APP_SECRET>"
+use_feishu = true
+receive_mode = "websocket"
+enabled = true
+[peer_groups.hr]
+channel = "lark.hr"
+agents = ["hr"]
+external_peers = ["<人力群_chat_id_oc...>"]
+
+[channels.lark.admin]
+app_id = "<ADMIN_BOT_APP_ID>"
+app_secret = "<ADMIN_BOT_APP_SECRET>"
+use_feishu = true
+receive_mode = "websocket"
+enabled = true
+[peer_groups.admin]
+channel = "lark.admin"
+agents = ["admin"]
+external_peers = ["<行政群_chat_id_oc...>"]
+
+[channels.lark.ops]
+app_id = "<OPS_BOT_APP_ID>"
+app_secret = "<OPS_BOT_APP_SECRET>"
+use_feishu = true
+receive_mode = "websocket"
+enabled = true
+[peer_groups.ops]
+channel = "lark.ops"
+agents = ["ops"]
+external_peers = ["<运营群_chat_id_oc...>"]
+
+[channels.lark.compliance]
+app_id = "<COMPLIANCE_BOT_APP_ID>"
+app_secret = "<COMPLIANCE_BOT_APP_SECRET>"
+use_feishu = true
+receive_mode = "websocket"
+enabled = true
+[peer_groups.compliance]
+channel = "lark.compliance"
+agents = ["compliance"]
+external_peers = ["<合规群_chat_id_oc...>"]
+
+# ════════════════ 主动预警 cron(可选,示例 3 个)════════════════
+# ⚠️ cron 别名必须是 ASCII(TOML 表头键不能用中文);中文放 name= 字段。
+# ⚠️ 要 cron 生效,启动必须用 `daemon` 模式(channel start 不带调度器)。
+[cron.daily_review]
+name = "每日经营巡检"
+job_type = "agent"
+prompt = "调用 analyze 拿全公司聚合,要点列各部门关键指标;有异常就开头标【预警】点名,否则【今日正常】。只报工具返回的真实数字。"
+schedule = { kind = "cron", expr = "30 8 * * *", tz = "Asia/Shanghai" }
+[cron.daily_review.delivery]
+mode = "announce"
+channel = "lark.ceo"
+to = "<CEO_GROUP_CHAT_ID>"
+
+[cron.finance_weekly]
+name = "财务周报"
+job_type = "agent"
+prompt = "每周财务巡检。调用 analyze 拿损益,2-3 句讲清净利润/收入/支出;有异常标【异常预警】,否则【本周正常】。只报真实数字。"
+schedule = { kind = "cron", expr = "0 9 * * 1", tz = "Asia/Shanghai" }
+[cron.finance_weekly.delivery]
+mode = "announce"
+channel = "lark.finance"
+to = "<FINANCE_GROUP_CHAT_ID>"
+
+[cron.contract_expiry]
+name = "合同证照到期提醒"
+job_type = "agent"
+prompt = "巡检「合同档案」,列 60 天内即将到期或已过期的合同/证照,点名提醒续约。都没有就回【近期无到期】。只报真实数据。"
+schedule = { kind = "cron", expr = "0 9 * * 1", tz = "Asia/Shanghai" }
+[cron.contract_expiry.delivery]
+mode = "announce"
+channel = "lark.admin"
+to = "<ADMIN_GROUP_CHAT_ID>"

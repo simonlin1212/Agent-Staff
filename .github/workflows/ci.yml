@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.9", "3.11"]   # 3.9 = codata 目标(纯 stdlib);两版都验生成的 TOML 合法性
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+
+      # 只查"逻辑错误"(语法 / 未定义名 / 无效比较 / 错位语句),不挑风格——稳绿且抓真 bug
+      - name: Lint (logical errors)
+        run: |
+          pip install ruff
+          ruff check --select E9,F63,F7,F82 .
+
+      # 纯逻辑单测:数据汇总 / 配置生成 / 权限编辑(不碰飞书 API,秒级)
+      # tomli 让 py3.9/3.10 也能跑「生成的 config 是合法 TOML」那条(py3.11+ 用内置 tomllib)
+      - name: Unit tests
+        run: |
+          pip install tomli
+          python -m unittest discover -s tests -v
+
+  secret-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # 防止真实密钥 / 身份 id 误提交(自包含 grep,排除占位符,零外部依赖)
+      - name: Secret scan
+        run: |
+          hits=$(grep -rnE '(app_secret|api_key)[[:space:]]*=[[:space:]]*"[A-Za-z0-9_-]{20,}"|enc2:|sk-ant-oat[0-9]|ou_[0-9a-f]{20}' \
+                   --include='*.toml' --include='*.py' --include='*.json' --include='*.md' --exclude-dir=.git . \
+                 | grep -vE '在这里填|_HERE|<[^>]+>|示例|example|xxxxxx|placeholder' || true)
+          if [ -n "$hits" ]; then echo "$hits"; echo "::error::发现疑似真实密钥/身份id,别提交!"; exit 1; fi
+          echo "✓ 无真实密钥泄露"

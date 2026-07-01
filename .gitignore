@@ -1,0 +1,41 @@
+# ─────────────────────────────────────────────
+# 密钥 / 凭证 —— 绝不提交(零容忍)
+# ─────────────────────────────────────────────
+*.local
+.secret_key
+auth-profiles.json
+.agent_sig.json
+*凭证*.local
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+
+# 真实配置(公开仓库只放 .example 模板;复制成真名后本地填密钥、不提交)
+agent-home/config.toml
+agent-os/dept_registry.json
+agent-os/feishu_base_meta.json
+
+# 运行时 / 生成数据
+agent-home/data/
+agent-home/state/
+agent-home/shared/
+agent-os/audit/
+数据备份/
+backups/
+*.log
+*.pid
+agent-home/.pid
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.tts-venv/
+
+# 系统
+.DS_Store
+Thumbs.db

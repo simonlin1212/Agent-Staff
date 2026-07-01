@@ -1,0 +1,14 @@
+# 飞书数据应用凭证模板
+# ⚠️⚠️ 别在本 .example 文件里填真值!它会随仓库公开(git 追踪)。
+#        真凭证只填进【复制出来的 .feishu凭证.local】(.local 已 gitignore,不会提交)。
+#        操作:cp .feishu凭证.example .feishu凭证.local  然后编辑 .local。
+#
+# 这是「数据应用」的凭证(给 codata 读写多维表格 / 文件用,需 bitable + drive 权限)。
+# 也可由 `bash setup.sh` 向导帮你生成,不用手填。
+
+# 自建应用凭证(open.feishu.cn → 开发者后台 → 凭证与基础信息;海外 open.larksuite.com)
+FEISHU_APP_ID=cli_在这里填你的AppID
+FEISHU_APP_SECRET=在这里填你的AppSecret_切勿提交
+
+# 多维表格 Base token(可选;一般不用填,provision.py 会自动建表并写回 dept_registry.json)
+# FEISHU_BASE_APP_TOKEN=在这里填你的BaseToken

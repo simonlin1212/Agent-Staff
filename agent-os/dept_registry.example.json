@@ -1,0 +1,105 @@
+{
+  "_说明": "部门登记表模板(一套完整公司组织架构:CEO 参谋长 + 营收[自媒体/电商/业务] + 职能[财务/人力/行政/运营/合规])。复制成 dept_registry.json 后填你自己的飞书 Base/表/bot/文件夹 token;dept_registry.json 已被 .gitignore。token 一般不用手填——scripts/provision.py 建表时自动写回。删掉不需要的部门、或照模板加更多,都在这里改。",
+
+  "公司": {
+    "base_name": "AgentStaff-公司",
+    "app_token": "<COMPANY_BASE_APP_TOKEN>",
+    "url": "https://your-tenant.feishu.cn/base/<COMPANY_BASE_APP_TOKEN>",
+    "tables": {
+      "月度目标": "<TABLE_ID>",
+      "经营备注": "<TABLE_ID>",
+      "财务台账": "<TABLE_ID>"
+    },
+    "bot": "<CEO_BOT_APP_ID>",
+    "folder_token": "<COMPANY_FOLDER_TOKEN>"
+  },
+
+  "自媒体运营部": {
+    "base_name": "AgentStaff-自媒体",
+    "app_token": "<MEDIA_BASE_APP_TOKEN>",
+    "url": "https://your-tenant.feishu.cn/base/<MEDIA_BASE_APP_TOKEN>",
+    "tables": {
+      "内容台账": "<TABLE_ID>"
+    },
+    "bot": "<MEDIA_BOT_APP_ID>",
+    "folder_token": "<MEDIA_FOLDER_TOKEN>"
+  },
+
+  "电商部": {
+    "base_name": "AgentStaff-电商",
+    "app_token": "<ECOM_BASE_APP_TOKEN>",
+    "url": "https://your-tenant.feishu.cn/base/<ECOM_BASE_APP_TOKEN>",
+    "tables": {
+      "订单台账": "<TABLE_ID>"
+    },
+    "bot": "<ECOM_BOT_APP_ID>",
+    "folder_token": "<ECOM_FOLDER_TOKEN>"
+  },
+
+  "业务部": {
+    "base_name": "AgentStaff-业务",
+    "app_token": "<BIZ_BASE_APP_TOKEN>",
+    "url": "https://your-tenant.feishu.cn/base/<BIZ_BASE_APP_TOKEN>",
+    "tables": {
+      "业务台账": "<TABLE_ID>"
+    },
+    "bot": "<BIZ_BOT_APP_ID>",
+    "folder_token": "<BIZ_FOLDER_TOKEN>"
+  },
+
+  "财务部": {
+    "base_name": "AgentStaff-财务",
+    "app_token": "<FINANCE_BASE_APP_TOKEN>",
+    "url": "https://your-tenant.feishu.cn/base/<FINANCE_BASE_APP_TOKEN>",
+    "tables": {
+      "运营支出明细": "<TABLE_ID>",
+      "固定支出清单": "<TABLE_ID>"
+    },
+    "bot": "<FINANCE_BOT_APP_ID>",
+    "folder_token": "<FINANCE_FOLDER_TOKEN>"
+  },
+
+  "人力部": {
+    "base_name": "AgentStaff-人力",
+    "app_token": "<HR_BASE_APP_TOKEN>",
+    "url": "https://your-tenant.feishu.cn/base/<HR_BASE_APP_TOKEN>",
+    "tables": {
+      "员工花名册": "<TABLE_ID>"
+    },
+    "bot": "<HR_BOT_APP_ID>",
+    "folder_token": "<HR_FOLDER_TOKEN>"
+  },
+
+  "行政部": {
+    "base_name": "AgentStaff-行政",
+    "app_token": "<ADMIN_BASE_APP_TOKEN>",
+    "url": "https://your-tenant.feishu.cn/base/<ADMIN_BASE_APP_TOKEN>",
+    "tables": {
+      "合同档案": "<TABLE_ID>"
+    },
+    "bot": "<ADMIN_BOT_APP_ID>",
+    "folder_token": "<ADMIN_FOLDER_TOKEN>"
+  },
+
+  "运营部": {
+    "base_name": "AgentStaff-运营",
+    "app_token": "<OPS_BASE_APP_TOKEN>",
+    "url": "https://your-tenant.feishu.cn/base/<OPS_BASE_APP_TOKEN>",
+    "tables": {
+      "运营指标": "<TABLE_ID>"
+    },
+    "bot": "<OPS_BOT_APP_ID>",
+    "folder_token": "<OPS_FOLDER_TOKEN>"
+  },
+
+  "合规部": {
+    "base_name": "AgentStaff-合规",
+    "app_token": "<COMPLIANCE_BASE_APP_TOKEN>",
+    "url": "https://your-tenant.feishu.cn/base/<COMPLIANCE_BASE_APP_TOKEN>",
+    "tables": {
+      "合规检查": "<TABLE_ID>"
+    },
+    "bot": "<COMPLIANCE_BOT_APP_ID>",
+    "folder_token": "<COMPLIANCE_FOLDER_TOKEN>"
+  }
+}
