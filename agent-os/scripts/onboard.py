@@ -48,7 +48,9 @@ def add_peer(text, alias, open_id):
         elif s.startswith("["):
             cur = None
         if cur == alias and s.startswith("external_peers"):
-            ids = re.findall(r'"(ou_[A-Za-z0-9]+)"', line)
+            # 保留白名单里已有的所有条目:群 chat_id(oc_)/通配(*)/open_id(ou_) 都不能丢,
+            # 否则对「群」配置跑一次 onboard 会把群/通配清空 → 权限墙失效。只匹配 ou_ 是旧 bug。
+            ids = re.findall(r'"([^"]+)"', line)
             if open_id not in ids:
                 ids.append(open_id)
                 added = True
