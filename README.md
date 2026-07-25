@@ -1,3 +1,5 @@
+<p align="center"><b>简体中文</b> | <a href="README_en.md">English</a></p>
+
 <div align="center">
 
 # Agent-Staff · 把你的公司,整个 Agent 化
@@ -5,8 +7,6 @@
 **你当 CEO,给你的公司配一套 AI 经营班子。** 按你真实的**组织架构**,给每个部门(业务 / 财务 / 人力 / 行政 / 运营 / 合规…)嵌一个 AI agent,一个 **CEO 参谋长**在上面跨部门聚合、统筹经营。它们常驻飞书、并行协作,替你把**整个公司的经营**跑起来——记账取数、跨部门实时战报、主动预警、经营决策支持。
 
 *You're the CEO — staff your whole company with AI. Mirror your real org chart: an AI agent embedded in every department (Business / Finance / HR / Admin / Ops / Compliance…), a chief-of-staff aggregating across them, all running your business inside Feishu. Agentify your entire company.*
-
-**English** → [README_EN.md](README_EN.md) · 简体中文(当前)
 
 ![license](https://img.shields.io/badge/license-MIT-green) ![python](https://img.shields.io/badge/python-3.9+-blue) ![feishu](https://img.shields.io/badge/底座-飞书多维表格-1E88E5) ![architecture](https://img.shields.io/badge/组织架构-每部门一个AI%20agent-orange) ![dogfood](https://img.shields.io/badge/dogfood-作者天天自用-success) ![models](https://img.shields.io/badge/模型-Claude%20·%20DeepSeek%20·%20Minimax-blue)
 
@@ -60,7 +60,7 @@ Agent-Staff 不是「几个 agent 帮你跑跑运营」——它把**整个公�
 
 > **这 9 个部门全部内置、全部可跑**:一条 `provision.py` 建好全部飞书表,`seed_demo_data.py` 灌好通用假数据,`@` 就有内容。**删掉不需要的、或照同一套模板加更多**(改 `dept_registry` + `config` 即可)——框架对部门数量没有限制,按你的真实组织架构裁。
 
-## 🔒 部门权限墙:谁能问、谁看得见,双层锁死
+## 部门权限墙:谁能问、谁看得见,双层锁死
 
 一家公司该有的隔离,它**天然就有**——不是事后加的软件过滤,是结构上就分开:
 
@@ -68,7 +68,7 @@ Agent-Staff 不是「几个 agent 帮你跑跑运营」——它把**整个公�
 - **部门之间互相看不见** —— 每个部门 agent 只读自己那张 Base(**结构隔离,不是软件过滤**)。业务看不到财务、财务看不到人力薪酬。**只有 CEO 参谋长能跨部门聚合**。
 - **每个部门一块独立文件空间** —— 每个部门有自己的飞书存储空间,agent 只调取本部门专属文件(合同 / 发票 / 报告),能读 PDF、OCR 扫描件、飞书原生文档。文件也隔离。
 
-## 🏢 长在飞书里 = 嵌进你的办公流
+## 长在飞书里 = 嵌进你的办公流
 
 Agent-Staff **不是另起一个系统**,是**长在飞书里**——数据是飞书多维表格,入口是飞书群 @。所以它和你公司**已经在用的整套飞书办公套件同一个底座**:考勤、审批、财务、文档、日历……都在飞书。
 
@@ -226,7 +226,19 @@ Agent-Staff 是**建在**这些项目之上的(依赖 + 致谢,**非套壳/改�
 
 ## 状态
 
-早期 · 作者自用 dogfood(每天真用、真数据)。欢迎 issue / PR。**Full English docs → [README_EN.md](README_EN.md)。**
+早期 · 作者自用 dogfood(每天真用、真数据)。欢迎 issue / PR。**Full English docs → [README_en.md](README_en.md)。**
+
+---
+
+## 赞赏
+
+如果这个工具帮到了你，欢迎请作者喝杯咖啡 ☕
+
+<p align="center">
+  <a href="https://buymeacoffee.com/simonlin1212"><img src="./assets/bmc-qr.png" width="180" alt="Buy Me a Coffee"></a>
+</p>
+
+---
 
 ## License
 

@@ -1,3 +1,5 @@
+<p align="center"><a href="README.md">简体中文</a> | <b>English</b></p>
+
 <div align="center">
 
 # Agent-Staff · Agentify Your Whole Company
@@ -6,7 +8,7 @@
 
 *把你的公司,整个 Agent 化。*
 
-[English (current)](README_EN.md) · **[简体中文](README.md)**
+[English (current)](README_en.md) · **[简体中文](README.md)**
 
 ![license](https://img.shields.io/badge/license-MIT-green) ![python](https://img.shields.io/badge/python-3.9+-blue) ![feishu](https://img.shields.io/badge/data-Feishu%20Bitable-1E88E5) ![architecture](https://img.shields.io/badge/org%20chart-one%20agent%20per%20dept-orange) ![dogfood](https://img.shields.io/badge/dogfood-used%20daily%20by%20author-success) ![models](https://img.shields.io/badge/models-Claude%20·%20DeepSeek%20·%20Minimax-blue)
 
@@ -60,7 +62,7 @@ One department = one agent = one Feishu Bitable + **its own file space** + a per
 
 > **All 9 departments are built in and runnable**: one `provision.py` creates every Feishu table, `seed_demo_data.py` fills generic sample data, and `@` gives you content immediately. **Delete the ones you don't need, or add more from the same template** (edit `dept_registry` + `config`) — the framework puts no cap on department count. Cut it to your real org chart.
 
-## 🔒 The department wall: who can ask, who can see — locked on two axes
+## The department wall: who can ask, who can see — locked on two axes
 
 The isolation a real company needs is **built in** — not a software filter bolted on afterward, but separation by structure:
 
@@ -68,7 +70,7 @@ The isolation a real company needs is **built in** — not a software filter bol
 - **Departments can't see each other** — each department agent reads only its own Base (**structural isolation, not a software filter**). Business can't see Finance; Finance can't see HR payroll. **Only the chief-of-staff aggregates across departments.**
 - **Each department has its own file space** — a dedicated Feishu storage space per department; the agent only reaches its own department's files (contracts / invoices / reports), reading PDFs, OCR scans, and native Feishu docs. Files are isolated too.
 
-## 🏢 It lives inside Feishu = it embeds in your workflow
+## It lives inside Feishu = it embeds in your workflow
 
 Agent-Staff **isn't a separate system** — it lives **inside Feishu**: the data is Feishu Bitable, the entry point is @-ing in a Feishu group. So it shares the same foundation as the Feishu suite your company already runs — attendance, approvals, finance, docs, calendar.
 
@@ -228,6 +230,18 @@ Agent-Staff is **built on top of** these projects (dependency + credit, **not a 
 ## Status
 
 Early · the author's own dogfood (used daily, real data). Issues / PRs welcome.
+
+---
+
+## Support
+
+If this tool saved you time, a coffee is appreciated ☕
+
+<p align="center">
+  <a href="https://buymeacoffee.com/simonlin1212"><img src="./assets/bmc-qr.png" width="180" alt="Buy Me a Coffee"></a>
+</p>
+
+---
 
 ## License
 
