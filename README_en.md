@@ -16,15 +16,6 @@
 
 ---
 
-## Open to AI Roles in Shenzhen
-
-The author is open to AI roles in Shenzhen, particularly in **AI-powered investment research products, Forward Deployed Engineering (FDE), and AI consulting or solutions** at Tencent, other leading technology companies, and financial institutions.
-
-He combines experience in financial institutions with hands-on AI product development, building open-source market data tools and multi-agent systems with **17K+ GitHub stars**.
-
-Contact: [simonlin0423@gmail.com](mailto:simonlin0423@gmail.com)
-
----
 > **Other AI tools give you one assistant. Agent-Staff gives you a whole company — staffed, department by department.**
 
 ## What this is
@@ -239,16 +230,6 @@ Agent-Staff is **built on top of** these projects (dependency + credit, **not a 
 ## Status
 
 Early · the author's own dogfood (used daily, real data). Issues / PRs welcome.
-
----
-
-## Support
-
-If this tool saved you time, a coffee is appreciated ☕
-
-<p align="center">
-  <a href="https://buymeacoffee.com/simonlin1212"><img src="./assets/bmc-qr.png" width="180" alt="Buy Me a Coffee"></a>
-</p>
 
 ---
 
