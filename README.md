@@ -14,6 +14,13 @@
 
 ---
 
+**作者求职｜深圳 · 香港 · 远程**
+
+我是 Simon，专注于 AI Agent 与实用工具开发，正在寻找深圳、香港或远程工作机会。  
+欢迎联系：[simonlin0423@gmail.com](mailto:simonlin0423@gmail.com)。
+
+---
+
 > **别的 AI 工具给你一个助理;Agent-Staff 给你一整套配齐部门的 AI 公司班子。**
 
 <p align="center">
