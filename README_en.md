@@ -236,3 +236,9 @@ Early · the author's own dogfood (used daily, real data). Issues / PRs welcome.
 ## License
 
 [MIT](LICENSE) · the zeroclaw dependency is MIT + Apache 2.0 (see its repo).
+
+---
+
+**Open to Opportunities · 看机会｜Shenzhen · Hong Kong · Remote**
+
+I'm Simon, building AI agents and practical tools. Currently open to opportunities in Shenzhen, Hong Kong, or remote — feel free to reach out: [simonlin0423@gmail.com](mailto:simonlin0423@gmail.com)
