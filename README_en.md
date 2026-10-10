@@ -48,17 +48,22 @@ This isn't automating a handful of tasks. It's giving your company an AI operati
 
 One department = one agent = one Feishu Bitable + **its own file space** + a persona + **its own access wall**. The open-source build ships a **complete 9-department company** (below), running out of the box:
 
-| Department agent | What it owns |
-|---|---|
-| 🏛 **Chief-of-Staff** | Rolls up a cross-department report; computes the **P&L / bottom line** (net take across businesses, net profit); flags anomalies and supports decisions. **Only it sees across departments** (each dept agent sees only its own — isolated by structure) |
-| 📱 **Media** · revenue | Per-platform content / views / follower-growth / monetization ledger; log an entry from one line in chat; content reports |
-| 🛒 **E-commerce** · revenue | Store orders / GMV / refunds / net-profit ledger |
-| 💼 **Business** · revenue | Clients / contracts / collections; log signings and payments by voice; business reports |
-| 💰 **Finance** · function | P&L, net profit, operating expenses; attach invoices / contracts as evidence, auditable |
-| 👥 **HR** · function | Roster, payroll, attendance; also the **identity backbone** for access control (who may talk to which department) |
-| 🗂 **Admin** · function | Contract / license expiry reminders (cron nudges you to renew), external records |
-| 📊 **Ops** · function | Day-to-day metric monitoring; runs analysis on a schedule, pushes anomalies to the group |
-| 🛡 **Compliance** · function | Policy / red-line checks, audit trail of every action |
+<table>
+<thead>
+<tr><th nowrap>Department agent</th><th>What it owns</th></tr>
+</thead>
+<tbody>
+<tr><td nowrap>🏛 <strong>Chief-of-Staff</strong></td><td>Rolls up a cross-department report; computes the <strong>P&amp;L / bottom line</strong> (net take across businesses, net profit); flags anomalies and supports decisions. <strong>Only it sees across departments</strong> (each dept agent sees only its own — isolated by structure)</td></tr>
+<tr><td nowrap>📱 <strong>Media</strong> · revenue</td><td>Per-platform content / views / follower-growth / monetization ledger; log an entry from one line in chat; content reports</td></tr>
+<tr><td nowrap>🛒 <strong>E-commerce</strong> · revenue</td><td>Store orders / GMV / refunds / net-profit ledger</td></tr>
+<tr><td nowrap>💼 <strong>Business</strong> · revenue</td><td>Clients / contracts / collections; log signings and payments by voice; business reports</td></tr>
+<tr><td nowrap>💰 <strong>Finance</strong> · function</td><td>P&amp;L, net profit, operating expenses; attach invoices / contracts as evidence, auditable</td></tr>
+<tr><td nowrap>👥 <strong>HR</strong> · function</td><td>Roster, payroll, attendance; also the <strong>identity backbone</strong> for access control (who may talk to which department)</td></tr>
+<tr><td nowrap>🗂 <strong>Admin</strong> · function</td><td>Contract / license expiry reminders (cron nudges you to renew), external records</td></tr>
+<tr><td nowrap>📊 <strong>Ops</strong> · function</td><td>Day-to-day metric monitoring; runs analysis on a schedule, pushes anomalies to the group</td></tr>
+<tr><td nowrap>🛡 <strong>Compliance</strong> · function</td><td>Policy / red-line checks, audit trail of every action</td></tr>
+</tbody>
+</table>
 
 > **All 9 departments are built in and runnable**: one `provision.py` creates every Feishu table, `seed_demo_data.py` fills generic sample data, and `@` gives you content immediately. **Delete the ones you don't need, or add more from the same template** (edit `dept_registry` + `config`) — the framework puts no cap on department count. Cut it to your real org chart.
 
@@ -90,18 +95,23 @@ The AI staff and your human team work in the **same Feishu**, so data and proces
 
 ## What it does for you (deliverables, not chat)
 
-| Capability | Detail |
-|---|---|
-| 🏢 **Org chart, agentified** | Build departments to match a real company; one agent per department, each owning its area, all in parallel; **chief-of-staff aggregates the business across departments in real time** |
-| 🗣️ **Voice bookkeeping** | Say a result in the group → it's logged into the right department's Feishu Bitable ledger (returns a record_id); **works out of the box** |
-| 📊 **Cross-department reports** | One Feishu Bitable per department as the base; read data + `analyze` for a rolled-up report, drill down to detail. **Want to pull external data (quotes / stars / traffic)? Write one `analyze` function** |
-| 💰 **P&L / bottom line** | Chief-of-staff turns per-business take, operating expenses, and headcount cost into net profit (math in code, only real numbers reported) |
-| 📁 **Reads files** | Reads files in a department's storage: PDF text extraction, image / scan OCR, native Feishu docs |
-| 🧾 **Evidence / audit trail** | Attach evidence (invoice / contract / screenshot) to a record, traceable; every tool call is logged |
-| ⏰ **Proactive alerts** | cron runs analysis on a schedule and pushes anomalies to the group — **you don't have to keep watching or asking** |
-| 🔒 **Per-person access** | Who may talk to which department agent is locked by a Feishu identity allowlist (both DMs and groups); `onboard.py` / `offboard.py` set / clear it in one shot |
-| 💾 **Your data, yours** | Everything lives in your own Feishu Bitable; export all department data to JSON in one command |
-| 🧠 **Model-agnostic** | Subscription or API key; Claude (tested) / DeepSeek / Minimax / Qwen / GLM / Ollama (should work); Feishu in China, Lark overseas |
+<table>
+<thead>
+<tr><th nowrap>Capability</th><th>Detail</th></tr>
+</thead>
+<tbody>
+<tr><td nowrap>🏢 <strong>Org chart, agentified</strong></td><td>Build departments to match a real company; one agent per department, each owning its area, all in parallel; <strong>chief-of-staff aggregates the business across departments in real time</strong></td></tr>
+<tr><td nowrap>🗣️ <strong>Voice bookkeeping</strong></td><td>Say a result in the group → it's logged into the right department's Feishu Bitable ledger (returns a record_id); <strong>works out of the box</strong></td></tr>
+<tr><td nowrap>📊 <strong>Cross-department reports</strong></td><td>One Feishu Bitable per department as the base; read data + <code>analyze</code> for a rolled-up report, drill down to detail. <strong>Want to pull external data (quotes / stars / traffic)? Write one <code>analyze</code> function</strong></td></tr>
+<tr><td nowrap>💰 <strong>P&amp;L / bottom line</strong></td><td>Chief-of-staff turns per-business take, operating expenses, and headcount cost into net profit (math in code, only real numbers reported)</td></tr>
+<tr><td nowrap>📁 <strong>Reads files</strong></td><td>Reads files in a department's storage: PDF text extraction, image / scan OCR, native Feishu docs</td></tr>
+<tr><td nowrap>🧾 <strong>Evidence / audit trail</strong></td><td>Attach evidence (invoice / contract / screenshot) to a record, traceable; every tool call is logged</td></tr>
+<tr><td nowrap>⏰ <strong>Proactive alerts</strong></td><td>cron runs analysis on a schedule and pushes anomalies to the group — <strong>you don't have to keep watching or asking</strong></td></tr>
+<tr><td nowrap>🔒 <strong>Per-person access</strong></td><td>Who may talk to which department agent is locked by a Feishu identity allowlist (both DMs and groups); <code>onboard.py</code> / <code>offboard.py</code> set / clear it in one shot</td></tr>
+<tr><td nowrap>💾 <strong>Your data, yours</strong></td><td>Everything lives in your own Feishu Bitable; export all department data to JSON in one command</td></tr>
+<tr><td nowrap>🧠 <strong>Model-agnostic</strong></td><td>Subscription or API key; Claude (tested) / DeepSeek / Minimax / Qwen / GLM / Ollama (should work); Feishu in China, Lark overseas</td></tr>
+</tbody>
+</table>
 
 ## What it is NOT
 
@@ -198,24 +208,34 @@ The data store is Feishu (China version, data in Beijing). **Overseas, use [Lark
 
 ## System dependencies
 
-| Tool | Purpose | Install |
-|---|---|---|
-| **runtime** | keeps agents alive / group @ / cron alerts | `install.sh` sets it up (built on the open-source [zeroclaw](https://github.com/zeroclaw-labs/zeroclaw) engine) |
-| **poppler** | PDF parsing (`pdftotext` / `pdftoppm`) | `brew install poppler` / `apt install poppler-utils` |
-| **tesseract** | image / scan OCR | `brew install tesseract` / `apt install tesseract-ocr`; **for Chinese**, install the `chi_sim` pack and set `export LARK_OCR_LANG=eng+chi_sim` |
-| **Python 3.9+** | codata (pure stdlib, no pip deps) | ships with the OS |
-| **lark-cli** (optional) | only to read native Feishu docs (docx/wiki); not needed for PDF/image/listing files | `npm install -g @larksuite/cli` (official) |
+<table>
+<thead>
+<tr><th nowrap>Tool</th><th>Purpose</th><th>Install</th></tr>
+</thead>
+<tbody>
+<tr><td nowrap><strong>runtime</strong></td><td>keeps agents alive / group @ / cron alerts</td><td><code>install.sh</code> sets it up (built on the open-source <a href="https://github.com/zeroclaw-labs/zeroclaw">zeroclaw</a> engine)</td></tr>
+<tr><td nowrap><strong>poppler</strong></td><td>PDF parsing (<code>pdftotext</code> / <code>pdftoppm</code>)</td><td><code>brew install poppler</code> / <code>apt install poppler-utils</code></td></tr>
+<tr><td nowrap><strong>tesseract</strong></td><td>image / scan OCR</td><td><code>brew install tesseract</code> / <code>apt install tesseract-ocr</code>; <strong>for Chinese</strong>, install the <code>chi_sim</code> pack and set <code>export LARK_OCR_LANG=eng+chi_sim</code></td></tr>
+<tr><td nowrap><strong>Python 3.9+</strong></td><td>codata (pure stdlib, no pip deps)</td><td>ships with the OS</td></tr>
+<tr><td nowrap><strong>lark-cli</strong> (optional)</td><td>only to read native Feishu docs (docx/wiki); not needed for PDF/image/listing files</td><td><code>npm install -g @larksuite/cli</code> (official)</td></tr>
+</tbody>
+</table>
 
 > Tools are found on PATH with an install hint if missing — cross-platform (macOS / Linux), no hardcoded paths.
 > **How to create the Feishu apps (required, manual) → [`docs/飞书接入指南.md`](docs/飞书接入指南.md)**
 
 ## Docs
 
-| Doc | Content |
-|---|---|
-| [架构.md](docs/架构.md) | Three-layer architecture (brain / abacus / store) + data flow + department roster |
-| [部署指南.md](docs/部署指南.md) | Deploy steps + **8 gotchas** (single Feishu long-connection / daemon carries cron / no Chinese TOML keys / sandbox…) |
-| [飞书接入指南.md](docs/飞书接入指南.md) | Step-by-step to create Feishu apps + lark-cli + overseas Lark |
+<table>
+<thead>
+<tr><th nowrap>Doc</th><th>Content</th></tr>
+</thead>
+<tbody>
+<tr><td nowrap><a href="docs/%E6%9E%B6%E6%9E%84.md">架构.md</a></td><td>Three-layer architecture (brain / abacus / store) + data flow + department roster</td></tr>
+<tr><td nowrap><a href="docs/%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97.md">部署指南.md</a></td><td>Deploy steps + <strong>8 gotchas</strong> (single Feishu long-connection / daemon carries cron / no Chinese TOML keys / sandbox…)</td></tr>
+<tr><td nowrap><a href="docs/%E9%A3%9E%E4%B9%A6%E6%8E%A5%E5%85%A5%E6%8C%87%E5%8D%97.md">飞书接入指南.md</a></td><td>Step-by-step to create Feishu apps + lark-cli + overseas Lark</td></tr>
+</tbody>
+</table>
 
 > Docs are currently in Chinese. English translations are welcome — open a PR.
 

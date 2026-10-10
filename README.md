@@ -55,17 +55,22 @@ Agent-Staff 不是「几个 agent 帮你跑跑运营」——它把**整个公�
 
 一个部门 = 一个 agent = 一张飞书多维表格 + **一块独立文件空间** + 一套人设 + **独立权限墙**。开源版**内置一套完整的 9 部门公司**(下表),开箱即跑:
 
-| 部门 agent | 管什么(职责) |
-|---|---|
-| 🏛 **CEO 参谋长** | 跨部门聚合出经营战报;算**经营总账**(各业务到手 / 净利润);异常统筹 + 经营决策支持。**只有它能跨部门看全局**(部门 agent 只看自己,结构隔离) |
-| 📱 **自媒体运营部** · 营收 | 各平台内容 / 播放 / 涨粉 / 变现台账;群里动嘴一句就记账;出内容战报 |
-| 🛒 **电商部** · 营收 | 店铺订单 / GMV / 退款 / 净利润台账 |
-| 💼 **业务部** · 营收 | 客户 / 合同 / 回款;签约回款动嘴记账,出业务战报 |
-| 💰 **财务部** · 职能 | 损益表、净利润、运营支出;发票 / 合同挂凭证归档,可追溯 |
-| 👥 **人力部** · 职能 | 花名册、薪酬、考勤;也是**权限身份地基**(谁能跟哪个部门说话) |
-| 🗂 **行政部** · 职能 | 合同 / 证照到期提醒(cron 主动喊续约)、对外档案 |
-| 📊 **运营部** · 职能 | 日常运营指标监控;定时跑分析,异常主动推群 |
-| 🛡 **合规部** · 职能 | 制度 / 红线检查、操作留痕审计 |
+<table>
+<thead>
+<tr><th nowrap>部门 agent</th><th>管什么(职责)</th></tr>
+</thead>
+<tbody>
+<tr><td nowrap>🏛 <strong>CEO 参谋长</strong></td><td>跨部门聚合出经营战报;算<strong>经营总账</strong>(各业务到手 / 净利润);异常统筹 + 经营决策支持。<strong>只有它能跨部门看全局</strong>(部门 agent 只看自己,结构隔离)</td></tr>
+<tr><td nowrap>📱 <strong>自媒体运营部</strong> · 营收</td><td>各平台内容 / 播放 / 涨粉 / 变现台账;群里动嘴一句就记账;出内容战报</td></tr>
+<tr><td nowrap>🛒 <strong>电商部</strong> · 营收</td><td>店铺订单 / GMV / 退款 / 净利润台账</td></tr>
+<tr><td nowrap>💼 <strong>业务部</strong> · 营收</td><td>客户 / 合同 / 回款;签约回款动嘴记账,出业务战报</td></tr>
+<tr><td nowrap>💰 <strong>财务部</strong> · 职能</td><td>损益表、净利润、运营支出;发票 / 合同挂凭证归档,可追溯</td></tr>
+<tr><td nowrap>👥 <strong>人力部</strong> · 职能</td><td>花名册、薪酬、考勤;也是<strong>权限身份地基</strong>(谁能跟哪个部门说话)</td></tr>
+<tr><td nowrap>🗂 <strong>行政部</strong> · 职能</td><td>合同 / 证照到期提醒(cron 主动喊续约)、对外档案</td></tr>
+<tr><td nowrap>📊 <strong>运营部</strong> · 职能</td><td>日常运营指标监控;定时跑分析,异常主动推群</td></tr>
+<tr><td nowrap>🛡 <strong>合规部</strong> · 职能</td><td>制度 / 红线检查、操作留痕审计</td></tr>
+</tbody>
+</table>
 
 > **这 9 个部门全部内置、全部可跑**:一条 `provision.py` 建好全部飞书表,`seed_demo_data.py` 灌好通用假数据,`@` 就有内容。**删掉不需要的、或照同一套模板加更多**(改 `dept_registry` + `config` 即可)——框架对部门数量没有限制,按你的真实组织架构裁。
 
@@ -97,18 +102,23 @@ AI 班子和真人团队在**同一个飞书**里协作,数据和流程天然可
 
 ## 它替你干什么(交付物,不是聊天)
 
-| 能力 | 说明 |
-|---|---|
-| 🏢 **组织架构 Agent 化** | 按真实公司搭部门,每个部门一个 agent、各管一摊、并行;**CEO 参谋长跨部门实时聚合经营** |
-| 🗣️ **动嘴记账** | 群里随口报一句成绩 → 自动记进对应部门的飞书多维表格台账(返回 record_id);**开箱即用** |
-| 📊 **跨部门经营战报** | 每部门一个飞书多维表格当底座;读数 + `analyze` 出汇总战报,能下钻到明细。**想自动拉外部数据(行情 / 星数 / 流量)?写个 analyze 函数即可** |
-| 💰 **经营总账 / 损益** | CEO 参谋长把各业务到手、运营支出、人工成本算成净利润(算数交代码,只报真实数字) |
-| 📁 **读文件** | 读部门存储空间文件:PDF 提取文字、图片 / 扫描件 OCR、飞书原生文档 |
-| 🧾 **凭证 / 留痕** | 给某条记录挂凭证(发票 / 合同 / 截图),可追溯;每次工具调用留操作审计 |
-| ⏰ **主动预警** | cron 定时跑分析,异常自己推到群——**不用你一直盯、一直问** |
-| 🔒 **按人控权限** | 谁能跟哪个部门 agent 说话,按飞书身份白名单锁(私聊 + 群都管);`onboard.py` / `offboard.py` 一键配 / 清 |
-| 💾 **数据自有** | 数据全在你自己的飞书多维表格;一键导出全部部门数据为 JSON 备份 |
-| 🧠 **模型自由** | 订阅 / API key 都行;Claude(实测)/ DeepSeek / Minimax / Qwen / GLM / Ollama(理论支持);中国飞书 + 海外 Lark |
+<table>
+<thead>
+<tr><th nowrap>能力</th><th>说明</th></tr>
+</thead>
+<tbody>
+<tr><td nowrap>🏢 <strong>组织架构 Agent 化</strong></td><td>按真实公司搭部门,每个部门一个 agent、各管一摊、并行;<strong>CEO 参谋长跨部门实时聚合经营</strong></td></tr>
+<tr><td nowrap>🗣️ <strong>动嘴记账</strong></td><td>群里随口报一句成绩 → 自动记进对应部门的飞书多维表格台账(返回 record_id);<strong>开箱即用</strong></td></tr>
+<tr><td nowrap>📊 <strong>跨部门经营战报</strong></td><td>每部门一个飞书多维表格当底座;读数 + <code>analyze</code> 出汇总战报,能下钻到明细。<strong>想自动拉外部数据(行情 / 星数 / 流量)?写个 analyze 函数即可</strong></td></tr>
+<tr><td nowrap>💰 <strong>经营总账 / 损益</strong></td><td>CEO 参谋长把各业务到手、运营支出、人工成本算成净利润(算数交代码,只报真实数字)</td></tr>
+<tr><td nowrap>📁 <strong>读文件</strong></td><td>读部门存储空间文件:PDF 提取文字、图片 / 扫描件 OCR、飞书原生文档</td></tr>
+<tr><td nowrap>🧾 <strong>凭证 / 留痕</strong></td><td>给某条记录挂凭证(发票 / 合同 / 截图),可追溯;每次工具调用留操作审计</td></tr>
+<tr><td nowrap>⏰ <strong>主动预警</strong></td><td>cron 定时跑分析,异常自己推到群——<strong>不用你一直盯、一直问</strong></td></tr>
+<tr><td nowrap>🔒 <strong>按人控权限</strong></td><td>谁能跟哪个部门 agent 说话,按飞书身份白名单锁(私聊 + 群都管);<code>onboard.py</code> / <code>offboard.py</code> 一键配 / 清</td></tr>
+<tr><td nowrap>💾 <strong>数据自有</strong></td><td>数据全在你自己的飞书多维表格;一键导出全部部门数据为 JSON 备份</td></tr>
+<tr><td nowrap>🧠 <strong>模型自由</strong></td><td>订阅 / API key 都行;Claude(实测)/ DeepSeek / Minimax / Qwen / GLM / Ollama(理论支持);中国飞书 + 海外 Lark</td></tr>
+</tbody>
+</table>
 
 ## 它不是什么
 
@@ -205,13 +215,18 @@ bash 启动.sh                                                    # 5. 启动
 
 ## 系统依赖
 
-| 工具 | 用途 | 安装 |
-|---|---|---|
-| **常驻运行时** | agent 常驻 / 群内 @ / cron 主动预警 | `install.sh` 自动装(底层用开源 [zeroclaw](https://github.com/zeroclaw-labs/zeroclaw) 引擎) |
-| **poppler** | PDF 解析(`pdftotext` / `pdftoppm`) | `brew install poppler` / `apt install poppler-utils` |
-| **tesseract** | 图片 / 扫描件 OCR | `brew install tesseract` / `apt install tesseract-ocr`;**读中文**:装 `chi_sim` 语言包后设环境变量 `export LARK_OCR_LANG=eng+chi_sim` |
-| **Python 3.9+** | codata(纯 stdlib,无 pip 依赖) | 系统自带 |
-| **lark-cli**(可选) | 读飞书原生文档(docx/wiki)时用;PDF/图片/列文件不需要 | `npm install -g @larksuite/cli`(官方) |
+<table>
+<thead>
+<tr><th nowrap>工具</th><th>用途</th><th>安装</th></tr>
+</thead>
+<tbody>
+<tr><td nowrap><strong>常驻运行时</strong></td><td>agent 常驻 / 群内 @ / cron 主动预警</td><td><code>install.sh</code> 自动装(底层用开源 <a href="https://github.com/zeroclaw-labs/zeroclaw">zeroclaw</a> 引擎)</td></tr>
+<tr><td nowrap><strong>poppler</strong></td><td>PDF 解析(<code>pdftotext</code> / <code>pdftoppm</code>)</td><td><code>brew install poppler</code> / <code>apt install poppler-utils</code></td></tr>
+<tr><td nowrap><strong>tesseract</strong></td><td>图片 / 扫描件 OCR</td><td><code>brew install tesseract</code> / <code>apt install tesseract-ocr</code>;<strong>读中文</strong>:装 <code>chi_sim</code> 语言包后设环境变量 <code>export LARK_OCR_LANG=eng+chi_sim</code></td></tr>
+<tr><td nowrap><strong>Python 3.9+</strong></td><td>codata(纯 stdlib,无 pip 依赖)</td><td>系统自带</td></tr>
+<tr><td nowrap><strong>lark-cli</strong>(可选)</td><td>读飞书原生文档(docx/wiki)时用;PDF/图片/列文件不需要</td><td><code>npm install -g @larksuite/cli</code>(官方)</td></tr>
+</tbody>
+</table>
 
 > 工具都按「在 PATH 里找 + 没装给安装提示」写,跨 macOS / Linux,不写死路径。
 > **飞书自建应用怎么建(必读,手动步骤)→ [`docs/飞书接入指南.md`](docs/飞书接入指南.md)**
